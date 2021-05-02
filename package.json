@@ -1,0 +1,23 @@
+{
+  "name": "movie_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stefan-pop/Movies-App.git"
+  },
+  "keywords": [],
+  "author": "Stefan Pop",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stefan-pop/Movies-App/issues"
+  },
+  "homepage": "https://github.com/stefan-pop/Movies-App#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
