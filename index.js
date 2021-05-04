@@ -7,5 +7,9 @@ app.get('/movies', (req, res) => {
         {movie_1:'info_1'}, 
         {movie_2:'info_2'},
         {movie_3:'info_3'}
-    ])
+    ]);
+})
+
+app.get('/', (req, res) => {
+    res.send('Test root path');
 })
