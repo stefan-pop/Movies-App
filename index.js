@@ -6,6 +6,11 @@ app.use(morgan('common'));
 
 app.use(express.static('public'))
 
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Server-side Error');
+})
+
 app.get('/movies', (req, res) => {
     res.json( [
         {movie_1:'info_1'}, 
