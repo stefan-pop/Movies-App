@@ -13,3 +13,7 @@ app.get('/movies', (req, res) => {
 app.get('/', (req, res) => {
     res.send('Test root path');
 })
+
+app.listen(8080, () => {
+    console.log('Server running');
+})
