@@ -131,6 +131,17 @@ app.post('/users', (req, res) => {
     }
 })
 
+// Update user info
+app.put('/users/:id/:new_username', (req, res) => {
+    let user = users.find((x) => { return x.id == req.params.id});
+    let prevUsername = user.username;
+    user.username = req.params.new_username;
+     if(user) {
+        console.log(user.username);
+        res.send(`The username of ${user.name} was updated from '${prevUsername}' to '${user.username}'`)
+     }
+})
+
 app.listen(8080, () => {
     console.log('Server running');
 })
