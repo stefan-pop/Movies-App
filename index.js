@@ -90,6 +90,11 @@ let movies = [
     }
 ]
 
+// Return all the movies in json format
+app.get('/movies', (req, res) => {
+    res.json(movies);
+})
+
 app.listen(8080, () => {
     console.log('Server running');
 })
