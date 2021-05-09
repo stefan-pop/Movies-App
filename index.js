@@ -119,6 +119,18 @@ app.get('/movies/details/directors/:director', (req, res) => {
     res.json(directorObject.director);
 })
 
+// Create a new user
+app.post('/users', (req, res) => {
+    if(req.body.name && req.body.email) {
+        req.body.id = uuid.v4();
+        users.push(req.body);
+        res.send(`User ${req.body.name} added successfully.
+        User ID: ${req.body.id}`);
+    }else {
+        res.status(404).send('Missing name');
+    }
+})
+
 app.listen(8080, () => {
     console.log('Server running');
 })
