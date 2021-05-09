@@ -101,6 +101,12 @@ app.get('/movies/:title', (req, res) => {
     res.json(returnByTitle);
 })
 
+// Filter the movies by genre
+app.get('/movies/genre/:genre', (req, res) => {
+    let returnByGenre = movies.filter((x) => {return x.genre == req.params.genre });
+    res.json(returnByGenre);
+})
+
 app.listen(8080, () => {
     console.log('Server running');
 })
