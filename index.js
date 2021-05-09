@@ -142,6 +142,15 @@ app.put('/users/:id/:new_username', (req, res) => {
      }
 })
 
+// Add a movie as favorite
+app.post('/users/:user/favorites', (req, res) => {
+    let user = users.find((x) => { return x.name == req.params.user});
+
+    if(user) {
+        res.send('New movie added to favorites')
+    }
+})
+
 app.listen(8080, () => {
     console.log('Server running');
 })
