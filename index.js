@@ -5,6 +5,12 @@ const uuid = require('uuid');
 const app = express();
 
 app.use(bodyParser.json());
+app.use(morgan('common'));
+app.use(express.static('public'));
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Server Error');
+})
 
 let users = [
     {
