@@ -162,6 +162,16 @@ app.delete('/users/:user/favorites/:movie_title', (req, res) => {
     }
 })
 
+// Delete account by the name of the user
+app.delete('/users/:user', (req, res) => {
+    let user = users.find((x) => { return x.name == req.params.user});
+
+    if(user) {
+        res.send(`The account with the name: ${user.name} has been removed successfully`)
+    }
+})
+
+
 app.listen(8080, () => {
     console.log('Server running');
 })
