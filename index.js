@@ -95,6 +95,12 @@ app.get('/movies', (req, res) => {
     res.json(movies);
 })
 
+// Return a movie by title
+app.get('/movies/:title', (req, res) => {
+    let returnByTitle = movies.find((x) => {return x.title == req.params.title });
+    res.json(returnByTitle);
+})
+
 app.listen(8080, () => {
     console.log('Server running');
 })
