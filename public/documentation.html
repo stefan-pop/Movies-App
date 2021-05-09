@@ -30,7 +30,9 @@
         <tbody>
             <tr>
                 <td>GET</td>
-                <td>/movies</td>
+                <td>/movies <hr>
+                    Return a list of ALL movies to the user
+                </td>
                 <td>No data expected</td>
                 <td>Returns an array of movie objects in JSON format</td>
             </tr>
@@ -38,6 +40,7 @@
             <tr>
                 <td>GET</td>
                 <td>/movies/[title] <hr>
+                    Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user <hr>
                     The URL's parameters must contain the following data: <br>
                      * [title] - The title of a movie.<br>
                 </td>
@@ -65,6 +68,7 @@
             <tr>
                 <td>GET</td>
                 <td>/movies/genre/[genre] <hr>
+                    Return data about a genre (description) by name/title (e.g., “Thriller”) <hr>
                     The URL's parameters must contain the following data: <br>
                      * [genre] - The name of a genre. (ex: horror, adventure, comedy, thriller...)<br>
                 </td>
@@ -91,7 +95,9 @@
 
             <tr>
                 <td>GET</td>
-                <td>/movies/details/directors</td>
+                <td>/movies/details/directors <hr>
+                    Return a list of ALL directors.
+                </td>
                 <td>No data expected</td>
                 <td>Returns a JSON array of objects containing all the directors and their description like follow: <br>
                 <pre><code>
@@ -116,6 +122,7 @@
             <tr>
                 <td>GET</td>
                 <td>/movies/details/directors/[director] <hr>
+                    Return data about a director (name, biography, birth year, death year) by name. <hr>
                     The URL's parameters must contain the following data: <br>
                      * [director] - The name of a director.<br>
                 </td>
@@ -135,7 +142,9 @@
 
             <tr>
                 <td>POST</td>
-                <td>/users</td>
+                <td>/users <hr>
+                    Allow new users to register.
+                </td>
                 <td>A JSON object with at least the name, username and the email of the user like follow: <br>
                     <pre><code>
                     {
@@ -160,6 +169,7 @@
             <tr>
                 <td>PUT</td>
                 <td>/users/[id]/[new_username] <hr>
+                    Allow users to update their username. <hr>
                     The URL's parameters must contain the following data: <br>
                      * [id] - the id of the user <br>
                      * [new_username] - a new username to replace the existing one.
@@ -171,7 +181,9 @@
 
             <tr>
                 <td>POST</td>
-                <td>/users/[user]/favorites</td>
+                <td>/users/[user]/favorites <hr>
+                    Allow users to add a movie to their list of favorites.
+                </td>
                 <td>A JSON object with the favorite movie.</td>
                 <td>Returns a confirmation message.</td>
             </tr>
@@ -179,6 +191,7 @@
             <tr>
                 <td>DELETE</td>
                 <td>/users/[user]/favorites/[movie_title]  <hr>
+                    Allow users to remove a movie from their list of favorites. <hr>
                     The URL's parameters must contain the following data: <br>
                      * [user] - the name of the user. <br>
                      * [movie-title] - the title of the movie to be removed.
@@ -190,14 +203,13 @@
             <tr>
                 <td>DELETE</td>
                 <td>/users/[user] <hr>
+                    Allow existing users to deregister. <hr>
                     The URL's parameters must contain the following data: <br>
                      * [user] - the name of the user. <br>
                 </td>
                 <td>No data expected.</td>
                 <td>Returns a confirmation message.</td>
             </tr>
-
-
         </tbody>
     </table>
 </body>
