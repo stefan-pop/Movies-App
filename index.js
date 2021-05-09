@@ -20,9 +20,9 @@ let users = [
       id: 'u2'
     },
   
-  ];
+];
   
-  let movies = [
+let movies = [
     {
       title: 'movie_1',
       genre: 'horror',
@@ -88,7 +88,7 @@ let users = [
           biography: 'The biography of the director'
       }
     }
-  ]
+]
 
 app.listen(8080, () => {
     console.log('Server running');
