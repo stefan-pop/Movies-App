@@ -151,6 +151,17 @@ app.post('/users/:user/favorites', (req, res) => {
     }
 })
 
+// Delete a movie from favorites by the title of the movie
+app.delete('/users/:user/favorites/:movie_title', (req, res) => {
+    let movieToDelete = movies.find((x) => {return x.title = req.params.movie_title});
+    let user = users.find((x) => { return x.name == req.params.user});
+
+    if(movieToDelete && user) {
+        console.log(movieToDelete);
+        res.send(`Movie ${movieToDelete.title} has been removed`);
+    }
+})
+
 app.listen(8080, () => {
     console.log('Server running');
 })
