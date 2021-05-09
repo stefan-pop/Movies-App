@@ -107,6 +107,12 @@ app.get('/movies/genre/:genre', (req, res) => {
     res.json(returnByGenre);
 })
 
+// Return a list of all directors
+app.get('/movies/details/directors', (req, res) => {
+    let directorsList = movies.map((x) => { return x.director});
+    res.json(directorsList);
+})
+
 app.listen(8080, () => {
     console.log('Server running');
 })
