@@ -113,6 +113,12 @@ app.get('/movies/details/directors', (req, res) => {
     res.json(directorsList);
 })
 
+// Return a director object by name
+app.get('/movies/details/directors/:director', (req, res) => {
+    let directorObject = movies.find((x) => { return x.director.name == req.params.director})
+    res.json(directorObject.director);
+})
+
 app.listen(8080, () => {
     console.log('Server running');
 })
