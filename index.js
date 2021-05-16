@@ -29,6 +29,15 @@ app.get('/movies/genre/:genre', (req, res) => {
     res.json(returnByGenre);
 })
 
+// Return details about a genre
+app.get('/movies/genres/details/:genre_name', (req,res) => {
+    let genreObject = movies.find((x) => {return x.genre.name = req.params.genre_name})
+
+    if (genreObject) {
+        res.json(genreObject.genre);
+    }
+})
+
 // Return a list of all directors
 app.get('/movies/details/directors', (req, res) => {
     let directorsList = movies.map((x) => { return x.director});
