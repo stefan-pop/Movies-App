@@ -68,7 +68,7 @@
             <tr>
                 <td>GET</td>
                 <td>/movies/genre/[genre] <hr>
-                    Return data about a genre (description) by name/title (e.g., “Thriller”) <hr>
+                    Return the movies belonging to a speciffic genre (e.g., “Thriller”) <hr>
                     The URL's parameters must contain the following data: <br>
                      * [genre] - The name of a genre. (ex: horror, adventure, comedy, thriller...)<br>
                 </td>
@@ -89,6 +89,25 @@
                             "biography": "The biography of the director"
                         }
                     }
+                </code></pre>
+                </td>
+            </tr>
+
+            <tr>
+                <td>GET</td>
+                <td>/movies/genres/details/[genre_name] <hr>
+                    Return data about a genre (description) by name/title (e.g., “Thriller”) <hr>
+                    The URL's parameters must contain the following data: <br>
+                     * [genre] - The name of a genre. (ex: Horror, Adventure, Comedy, Thriller...)<br>
+                </td>
+                <td>No data expected</td>
+                <td>Returns a JSON object/array of objects containing the movie/movies belonging to the URL's parameter. <br>
+                    If [genre] = Horror , the result will be like follow:
+                <pre><code>
+                        {
+                            "name": "Horror",
+                            "description": "Description of the Horror genre"
+                        }
                 </code></pre>
                 </td>
             </tr>
