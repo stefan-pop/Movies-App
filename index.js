@@ -6,6 +6,9 @@ const app = express();
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 
+const Users = Models.User;
+const Movies = Models.Movie;
+
 app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(express.static('public'));
