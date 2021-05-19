@@ -15,6 +15,19 @@
         table {
         border-spacing: 5px;
         }
+
+        span {
+            color: rgb(17, 146, 231);
+            font-size: 20px;
+        }
+
+        code {
+            color: rgb(240, 74, 74);
+        }
+
+        small {
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -30,7 +43,7 @@
         <tbody>
             <tr>
                 <td>GET</td>
-                <td>/movies <hr>
+                <td><span>/movies</span> <hr>
                     Return a list of ALL movies to the user
                 </td>
                 <td>No data expected</td>
@@ -39,27 +52,31 @@
 
             <tr>
                 <td>GET</td>
-                <td>/movies/[title] <hr>
+                <td><span>/movies/[title]</span> <hr>
                     Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user <hr>
                     The URL's parameters must contain the following data: <br>
-                     * [title] - The title of a movie.<br>
+                     * [title] - The title of a movie (ex: The%20Outpost).<br>
                 </td>
                 <td>No data expected</td>
                 <td>Returns a JSON object containing the movie with the title of the URL's parameter. <br>
-                    If [title] = movie_5 , the result will be like follow:
+                    If [title] = The%20Outpost , the result will be like follow:
                 <pre><code>
                     {
-                        "title": "movie_5",
-                        "genre": "comedy",
-                        "description": "The description of movie_5",
-                        "image": "url to the image of movie_5",
-                        "featured": true,
+                        "_id" : "mongoDB generated",
+                        "title": "The Outpost",
+                        "description": "movie's description",
+                        "genre": {
+                            "name": "movie's genre",
+                            "description": "genre's description"
+                        },
                         "director": {
-                            "name": "Director5",
-                            "birthYear": "1960",
-                            "deathYear": "",
-                            "biography": "The biography of the director"
-                        }
+                            "name": "director's name",
+                            "bio": "director's biography",
+                            "birth": "director's birth",
+                            "death": "director's death or a boolean"
+                        },
+                        "imagePath": "URL to the IMDB image of the movie",
+                        "featured": boolean
                     }
                 </code></pre>
                 </td>
@@ -67,41 +84,13 @@
 
             <tr>
                 <td>GET</td>
-                <td>/movies/genre/[genre] <hr>
-                    Return the movies belonging to a speciffic genre (e.g., “Thriller”) <hr>
-                    The URL's parameters must contain the following data: <br>
-                     * [genre] - The name of a genre. (ex: horror, adventure, comedy, thriller...)<br>
-                </td>
-                <td>No data expected</td>
-                <td>Returns a JSON object/array of objects containing the movie/movies belonging to the URL's parameter. <br>
-                    If [genre] = horror , the result will be like follow:
-                <pre><code>
-                    {
-                        "title": "movie_5",
-                        "genre": "horror",
-                        "description": "The description of movie_5",
-                        "image": "url to the image of movie_5",
-                        "featured": true,
-                        "director": {
-                            "name": "Director5",
-                            "birthYear": "1960",
-                            "deathYear": "",
-                            "biography": "The biography of the director"
-                        }
-                    }
-                </code></pre>
-                </td>
-            </tr>
-
-            <tr>
-                <td>GET</td>
-                <td>/movies/genres/details/[genre_name] <hr>
+                <td><span>/movies/genres/[genre_name]</span> <hr>
                     Return data about a genre (description) by name/title (e.g., “Thriller”) <hr>
                     The URL's parameters must contain the following data: <br>
                      * [genre] - The name of a genre. (ex: Horror, Adventure, Comedy, Thriller...)<br>
                 </td>
                 <td>No data expected</td>
-                <td>Returns a JSON object/array of objects containing the movie/movies belonging to the URL's parameter. <br>
+                <td>Returns a JSON object containing the name and the description of a genre. <br>
                     If [genre] = Horror , the result will be like follow:
                 <pre><code>
                         {
@@ -114,46 +103,20 @@
 
             <tr>
                 <td>GET</td>
-                <td>/movies/details/directors <hr>
-                    Return a list of ALL directors.
-                </td>
-                <td>No data expected</td>
-                <td>Returns a JSON array of objects containing all the directors and their description like follow: <br>
-                <pre><code>
-                    [
-                        {
-                            "name": "Director1",
-                            "birthYear": "1960",
-                            "deathYear": "",
-                            "biography": "The biography of the director"
-                        },
-                        {
-                            "name": "Director2",
-                            "birthYear": "1964",
-                            "deathYear": "",
-                            "biography": "The biography of the director"
-                        }
-                    ]
-                </code></pre>
-                </td>
-            </tr>
-
-            <tr>
-                <td>GET</td>
-                <td>/movies/details/directors/[director] <hr>
+                <td><span>/movies/details/directors/[director_name]</span> <hr>
                     Return data about a director (name, biography, birth year, death year) by name. <hr>
                     The URL's parameters must contain the following data: <br>
-                     * [director] - The name of a director.<br>
+                     * [director] - The name of a director (ex: Rod20%Lurie).<br>
                 </td>
                 <td>No data expected</td>
                 <td>Returns a JSON object containing data about a director, by director's name. <br>
-                    If [director] = Director1 , the result will be like follow:
+                    If [director] = Rod%20Lurie , the result will be like follow:
                 <pre><code>
                     {
-                        "name": "Director1",
-                        "birthYear": "director's birthyear",
-                        "deathYear": "director's deathyear",
-                        "biography": "The biography of the director"
+                        "name": "Rod Lurie",
+                        "bio": "The biography of Rod Lurie",
+                        "birth": "Rod Lurie's birthyear",
+                        "death": "Rod Lurie's deathyear or a boolean"
                     }
                 </code></pre>
                 </td>
@@ -161,25 +124,28 @@
 
             <tr>
                 <td>POST</td>
-                <td>/users <hr>
+                <td><span>/users</span> <hr>
                     Allow new users to register.
                 </td>
-                <td>A JSON object with at least the name, username and the email of the user like follow: <br>
+                <td>A JSON object like follow: <br>
                     <pre><code>
                     {
-                        "name": "user_name",
-                        "username": "users_username"
-                        "email": "example@gmail.com"
+                        "username": "username",       <small>(mandatory, data-type: String)</small>
+                        "pwd": "password",            <small>(mandatory, data-type: String)</small>
+                        "email": "example@gmail.com", <small>(mandatory, data-type: String)</small>
+                        "birth_date": "yyyy-mm.dd"    <small>(data-type: String)</small>
                     }
                     </code></pre>
                 </td>
-                <td>Returns a JSON object containing data from the request body plus an automatically generated ID.
+                <td>Returns a JSON object containing data from the request body plus the rest of the structure of user model. If the non-mandatory fields are omitted, their values will be set to 'null'.
                 <pre><code>
                     {
-                        "name": "user_name",
-                        "username": "user_username"
-                        "email": "example@gmail.com"
-                        "id": "this was generated by uuid express module"
+                        "_id": "automatically generated",
+                        "username": "user_username",
+                        "pwd": "password",
+                        "email": "example@gmail.com",
+                        "birth_date": "user's birth",
+                        "favorite_movies": []
                     }
                 </code></pre>
                 </td>
@@ -187,44 +153,77 @@
 
             <tr>
                 <td>PUT</td>
-                <td>/users/[id]/[new_username] <hr>
-                    Allow users to update their username. <hr>
+                <td><span>/users/[username]</span> <hr>
+                    Allow users to update their informations. <hr>
                     The URL's parameters must contain the following data: <br>
-                     * [id] - the id of the user <br>
-                     * [new_username] - a new username to replace the existing one.
+                     * [username] - The username of the user to be updated.
                 </td>
-                <td>No data expected.</td>
-                <td>Returns a confirmation message with the modified data ( the previous and the actual username ).
+                <td>A complete JSON object like in the POST method including the desired updates. <br>
+                <pre><code>
+                    {
+                        "username": "new-username",
+                        "pwd": "new-password",
+                        "email": "example@gmail.com",
+                        "birth_date": "yyyy-mm.dd",
+                    }
+                    </code></pre> <br>
+                    This request body will only update the "username" and the "pwd", but the other key-value pairs are still present. If a field is omitted it's value will be set to null.( "favorite_movies" can't be updated here and therefore must be omitted).
+                </td>
+                <td> Returns the updated user object. <br>
+                <pre><code>
+                    {
+                        "_id": "users's id",
+                        "username": "new-username",
+                        "pwd": "new-password",
+                        "email": "example@gmail.com",
+                        "birth_date": "user's birth date",
+                        "favorite_movies": []
+                    }
+                </code></pre>
                 </td>
             </tr>
 
             <tr>
                 <td>POST</td>
-                <td>/users/[user]/favorites <hr>
-                    Allow users to add a movie to their list of favorites.
+                <td><span>/users/[username]/favorites/[movie_id]</span> <hr>
+                    Allow users to add a movie to their list of favorites. <hr>
+                    The URL's parameters must contain the following data: <br>
+                     * [username] - The username of the user. <br>
+                     * [movie_id] - The _id of a favorite movie.
                 </td>
-                <td>A JSON object with the favorite movie.</td>
-                <td>Returns a confirmation message.</td>
+                <td>No data expected</td>
+                <td>Returns the entire user object in JSON format, with the updated "favorite_movies" array. <br>
+                <pre><code>
+                    {
+                        "_id": "users's id",
+                        "username": "new-username",
+                        "pwd": "new-password",
+                        "email": "example@gmail.com",
+                        "birth_date": "user's birth date",
+                        "favorite_movies": [movie.id]
+                    }
+                </code></pre>
+                </td>
             </tr>
 
             <tr>
                 <td>DELETE</td>
-                <td>/users/[user]/favorites/[movie_title]  <hr>
+                <td><span>/users/[username]/favorites/[movie_id]</span>  <hr>
                     Allow users to remove a movie from their list of favorites. <hr>
                     The URL's parameters must contain the following data: <br>
-                     * [user] - the name of the user. <br>
-                     * [movie-title] - the title of the movie to be removed.
+                     * [username] - The username of the user. <br>
+                     * [movie_id] - the _id of the movie to be removed from "favorite_movies" array.
                 </td>
                 <td>No data expected.</td>
-                <td>Returns a confirmation message.</td>
+                <td>Returns the entire user object in JSON format, with the updated "favorite_movies" array.</td>
             </tr>
 
             <tr>
                 <td>DELETE</td>
-                <td>/users/[user] <hr>
+                <td><span>/users/[username]</span><hr>
                     Allow existing users to deregister. <hr>
                     The URL's parameters must contain the following data: <br>
-                     * [user] - the name of the user. <br>
+                     * [username] - the username of the user. <br>
                 </td>
                 <td>No data expected.</td>
                 <td>Returns a confirmation message.</td>
