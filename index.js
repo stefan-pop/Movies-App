@@ -5,6 +5,10 @@ const uuid = require('uuid');
 const app = express();
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+//authentication
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 
 const Users = Models.User;
 const Movies = Models.Movie;
