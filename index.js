@@ -5,10 +5,7 @@ const uuid = require('uuid');
 const app = express();
 const mongoose = require('mongoose');
 const Models = require('./models.js');
-//authentication
-let auth = require('./auth')(app);
-const passport = require('passport');
-require('./passport');
+
 
 const Users = Models.User;
 const Movies = Models.Movie;
@@ -16,6 +13,12 @@ const Movies = Models.Movie;
 mongoose.connect('mongodb://localhost:27017/movieAppDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(bodyParser.json());
+
+//authentication
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
+
 app.use(morgan('common'));
 app.use(express.static('public'));
 app.use((err, req, res, next) => {
