@@ -13,18 +13,18 @@ const Movies = Models.Movie;
 mongoose.connect('mongodb://localhost:27017/movieAppDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(bodyParser.json());
+app.use(morgan('common'));
+app.use(express.static('public'));
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Server Error');
+})
 
 //authentication
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
-
-app.use(morgan('common'));
-app.use(express.static('public'));
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Server Error');
-})
 
 // Return all the movies in json format
 app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
