@@ -16,10 +16,7 @@ app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(express.static('public'));
 
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Server Error');
-})
+
 
 //authentication
 let auth = require('./auth')(app);
@@ -161,6 +158,11 @@ app.delete('/users/:username', passport.authenticate('jwt', {session: false}), (
        console.error(err);
        res.status(500).send('Error: ' + err);
    })
+})
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Server Error');
 })
 
 
