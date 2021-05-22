@@ -42,6 +42,17 @@
         </thead>
         <tbody>
             <tr>
+                <td>POST</td>
+                <td><span>/login</span> <hr>
+                    Allows users to authenticate.
+                </td>
+                <td>No data expected. Requires 2 URL prameters (username & pwd) like follow:
+                    "username=users_username&pwd=users_pasword"
+                </td>
+                <td>Returns the whole user JSON object with the assigned token in a new field.</td>
+            </tr>
+
+            <tr>
                 <td>GET</td>
                 <td><span>/movies</span> <hr>
                     Return a list of ALL movies to the user
