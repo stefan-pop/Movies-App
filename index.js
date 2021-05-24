@@ -84,13 +84,14 @@ app.get('/movies/details/directors/:director_name', passport.authenticate('jwt',
 
 // Create a new user
 app.post('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
+    let encryptedPassword = Users.hashPassword(req.body.pwd);
     Users.findOne({username: req.body.username}).then((response) => {
         if (response) {
             res.status(400).send(req.body.username + ' already exist.');
         }else {
             Users.create({
                 username: req.body.username,
-                pwd: req.body.pwd,
+                pwd: encryptedPassword,
                 email: req.body.email,
                 birth_date: req.body.birth_date
             }).then((user) => {
