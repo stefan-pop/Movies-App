@@ -5,6 +5,7 @@ const uuid = require('uuid');
 const app = express();
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+const cors = require('cors');
 
 
 const Users = Models.User;
