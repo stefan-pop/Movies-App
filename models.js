@@ -26,6 +26,16 @@ let userSchema = mongoose.Schema({
     favorite_movies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movie'}]
 })
 
+// Function that encrypts the password
+userSchema.static.hashPassword = function(password) {
+    return bcrypt.hashSync(password, 10);
+};
+
+// Function that compares the encrypted password from the route against the password from the DB.
+usersSchema.methods.validatePassword = function(password) {
+    return bcrypt.compareSync(password, this.pwd);
+};
+
 let Movie = mongoose.model('Movie', movieSchema);
 let User = mongoose.model('User', userSchema);
 
