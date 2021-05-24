@@ -12,12 +12,22 @@ const Users = Models.User;
 const Movies = Models.Movie;
 
 mongoose.connect('mongodb://localhost:27017/movieAppDB', {useNewUrlParser: true, useUnifiedTopology: true});
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
 app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(express.static('public'));
 
-
+// Configure CORS
+app.use(corse({
+    origin: (origin, callback) => {
+        if(!origin) return callback(null, true);
+        if( allowedOrigins.indexOf(origin) === -1) {
+            return callback(new Error( `Access from '${origin}' denied.`), false);
+        }
+        return callback(null, true);
+    }
+}));
 
 //authentication
 let auth = require('./auth')(app);
