@@ -84,7 +84,20 @@ app.get('/movies/details/directors/:director_name', passport.authenticate('jwt',
 })
 
 // Create a new user
-app.post('/users', (req, res) => {
+app.post('/users', [
+        // Configure the validation of req.body
+        check('username', 'Username is required').isLength({min: 5, max: 20}),
+        check('username', 'Only alphanumeric characters are allowed'). isAlphanumeric(),
+        check('pwd', 'Password is required').not().isEmpty(),
+        check('email', 'Email not valid'). isEmail()
+    ],(req, res) => {
+        // Check the validation object for errors
+        let errors = validationResult(req);
+
+        if(!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
+        }
+
     let encryptedPassword = Users.hashPassword(req.body.pwd);
     Users.findOne({username: req.body.username}).then((response) => {
         if (response) {
