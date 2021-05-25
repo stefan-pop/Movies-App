@@ -121,7 +121,19 @@ app.post('/users', [
 })
 
 // Update user info
-app.put('/users/:username', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.put('/users/:username', passport.authenticate('jwt', {session: false}), [
+        check('username', 'Username is required').isLength({min: 5, max: 20}),
+        check('username', 'Only alphanumeric characters are allowed').isAlphanumeric(),
+        check('pwd', 'Password is required').not().isEmpty(),
+        check('email', 'Email not valid').isEmail()
+    ],(req, res) => {
+        //config the validation
+        let errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
     Users.findOneAndUpdate({username: req.params.username}, {
         $set: { 
             username: req.body.username,
