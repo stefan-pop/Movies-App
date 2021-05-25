@@ -6,6 +6,7 @@ const app = express();
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 const cors = require('cors');
+const { check, validationResult } = require('express-validator');
 
 
 const Users = Models.User;
@@ -19,7 +20,7 @@ app.use(morgan('common'));
 app.use(express.static('public'));
 
 // Configure CORS
-app.use(corse({
+app.use(cors({
     origin: (origin, callback) => {
         if(!origin) return callback(null, true);
         if( allowedOrigins.indexOf(origin) === -1) {
