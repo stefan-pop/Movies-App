@@ -84,7 +84,7 @@ app.get('/movies/details/directors/:director_name', passport.authenticate('jwt',
 })
 
 // Create a new user
-app.post('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.post('/users', (req, res) => {
     let encryptedPassword = Users.hashPassword(req.body.pwd);
     Users.findOne({username: req.body.username}).then((response) => {
         if (response) {
