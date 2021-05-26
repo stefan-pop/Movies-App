@@ -32,7 +32,7 @@ userSchema.static.hashPassword = function(password) {
 };
 
 // Function that compares the encrypted password from the route against the password from the DB.
-usersSchema.methods.validatePassword = function(password) {
+userSchema.methods.validatePassword = function(password) {
     return bcrypt.compareSync(password, this.pwd);
 };
 
