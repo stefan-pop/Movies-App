@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const Models = require('./models.js');
 const cors = require('cors');
 const { check, validationResult } = require('express-validator');
+const PORT = process.env.PORT || 8080;
 
 
 const Users = Models.User;
@@ -204,6 +205,6 @@ app.use((err, req, res, next) => {
 })
 
 
-app.listen(8080, () => {
-    console.log('Server running');
+app.listen(PORT, '0.0.0.0' , () => {
+    console.log(`>Server running on port: ${PORT}`);
 })
