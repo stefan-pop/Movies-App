@@ -40,6 +40,11 @@ let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
+// Home Page
+app.get('/', (req, res) => {
+    res.send("Welcome to the homepage.");
+})
+
 // Return all the movies in json format
 app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
     Movies.find().then((movies) => {
