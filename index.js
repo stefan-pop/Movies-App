@@ -15,7 +15,8 @@ const Movies = Models.Movie;
 
       //Mongoose connection
 // mongoose.connect('mongodb://localhost:27017/movieAppDB', {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.connect('process.env.CONNECTION_URI', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('process.env.CONNECTION_URI', {useNewUrlParser: true, useUnifiedTopology: true}).then(() => console.log("Connection Successful"))
+.catch((err) => console.log(err));
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
