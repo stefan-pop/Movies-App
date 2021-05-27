@@ -13,7 +13,10 @@ const PORT = process.env.PORT || 8080;
 const Users = Models.User;
 const Movies = Models.Movie;
 
-mongoose.connect('mongodb://localhost:27017/movieAppDB', {useNewUrlParser: true, useUnifiedTopology: true});
+      //Mongoose connection
+// mongoose.connect('mongodb://localhost:27017/movieAppDB', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('process.env.CONNECTION_URI', {useNewUrlParser: true, useUnifiedTopology: true});
+
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
 app.use(bodyParser.json());
