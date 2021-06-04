@@ -18,7 +18,7 @@ const Movies = Models.Movie;
 mongoose.connect( process.env.CONNECTION_URI , {useNewUrlParser: true, useUnifiedTopology: true}).then(() => console.log("Connection Successful"))
 .catch((err) => console.log(err));
 
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234'];
 
 app.use(bodyParser.json());
 app.use(morgan('common'));
