@@ -20,9 +20,6 @@ mongoose.connect( process.env.CONNECTION_URI , {useNewUrlParser: true, useUnifie
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234'];
 
-app.use(bodyParser.json());
-app.use(morgan('common'));
-app.use(express.static('public'));
 
 // Configure CORS
 app.use(cors({
@@ -34,6 +31,10 @@ app.use(cors({
         return callback(null, true);
     }
 }));
+
+app.use(morgan('common'));
+app.use(express.static('public'));
+app.use(bodyParser.json());
 
 //authentication
 let auth = require('./auth')(app);
