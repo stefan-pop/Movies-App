@@ -112,7 +112,7 @@ app.post('/users', [
     let encryptedPassword = Users.hashPassword(req.body.pwd);
     Users.findOne( {$or: [{username: req.body.username}, {email: req.body.email}]} ).then((response) => {
         if (response) {
-            res.status(400).send(req.body.username + 'or' + req.body.email + ' already exist.');
+            res.status(400).send(req.body.username + ' or ' + req.body.email + ' already exist.');
         }else {
             Users.create({
                 username: req.body.username,
