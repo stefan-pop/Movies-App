@@ -131,6 +131,38 @@ app.post('/users', [
     })
 })
 
+// Get a user by username
+app.get('/users/:username', passport.authenticate('jwt', {
+    session: false
+    }), (req, res) => {
+        Users.findOne({
+            username: req.params.username
+        })
+        .then((user) => {
+            res.json(user);
+        }).catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+    });
+
+// Get the list of favorite movies for a speciffic user by username
+app.get('/users/favorites/:username', passport.authenticate('jwt', {
+    session: false
+    }), (req, res) => {
+        Users.findOne({
+            username: req.params.username
+        })
+        .then((user) => {
+            res.json(user);
+            let favorite_movies = user.favorite_movies;
+            return favorite_movies;
+        }).catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+    });
+
 // Update user info
 app.put('/users/:username', passport.authenticate('jwt', {session: false}), [
         check('username', 'Username is required').isLength({min: 5, max: 20}),
