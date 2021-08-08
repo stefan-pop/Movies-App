@@ -155,7 +155,8 @@ app.get('/users/favorites/:username', passport.authenticate('jwt', {
         })
         .then((user) => {
             res.json(user);
-            let favorite_movies = user.favorite_movies;
+        }).then((json) => {
+            let favorite_movies = json.favorite_movies;
             return favorite_movies;
         }).catch((err) => {
             console.error(err);
