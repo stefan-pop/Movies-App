@@ -200,6 +200,46 @@
             </tr>
 
             <tr>
+                <td>GET</td>
+                <td><span>/users/[username]</span> <hr>
+                    Get a user by its username <hr>
+                    The URL's parameters must contain the following data: <br>
+                     * [username] - The username of a user<br>
+                </td>
+                <td>No data expected</td>
+                <td>Returns a JSON object containing all the information about a user. <br>
+                <pre><code>
+                    {
+                        "favorite_movies": [
+                            "Id of favorite movies or an empty array"
+                        ],
+                        "_id": "user's id",
+                        "username": "user's username",
+                        "pwd": "user's password",
+                        "email": "user's email",
+                        "birth_date": "birthdate of the user",
+                        "__v": 0
+                    }
+                </code></pre>
+                </td>
+            </tr>
+
+            <tr>
+                <td>GET</td>
+                <td><span>/users/favorites/[username]</span> <hr>
+                    Get a user's list of favorite movies <hr>
+                    The URL's parameters must contain the following data: <br>
+                     * [username] - The username of a user<br>
+                </td>
+                <td>No data expected</td>
+                <td>Returns an array with all the id's of favorite movies. If there are no favorite movies the array will be empty. <br>
+                <pre><code>
+                    ["id of a favorite movie", "another id of a favorite movie"]
+                </code></pre>
+                </td>
+            </tr>
+
+            <tr>
                 <td>POST</td>
                 <td><span>/users/[username]/favorites/[movie_id]</span> <hr>
                     Allow users to add a movie to their list of favorites. <hr>
