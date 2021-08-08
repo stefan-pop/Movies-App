@@ -154,10 +154,8 @@ app.get('/users/favorites/:username', passport.authenticate('jwt', {
             username: req.params.username
         })
         .then((user) => {
-            res.json(user);
-        }).then((json) => {
-            let favorite_movies = json.favorite_movies;
-            return favorite_movies;
+            let favorite_movies = user.favorite_movies;
+            res.json(favorite_movies);
         }).catch((err) => {
             console.error(err);
             res.status(500).send('Error: ' + err);
