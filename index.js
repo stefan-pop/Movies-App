@@ -18,7 +18,14 @@ const Movies = Models.Movie;
 mongoose.connect( process.env.CONNECTION_URI , {useNewUrlParser: true, useUnifiedTopology: true}).then(() => console.log("Connection Successful"))
 .catch((err) => console.log(err));
 
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234', 'https://myflix-2021.netlify.app', 'http://localhost:4200', 'https://stefan-pop.github.io/myFlix-Angular-client'];
+let allowedOrigins = [
+    'http://localhost:8080',
+    'http://testsite.com',
+    'http://localhost:1234',
+    'https://myflix-2021.netlify.app',
+    'http://localhost:4200',
+    'https://stefan-pop.github.io/myFlix-Angular-client'
+];
 
 
 // Configure CORS
