@@ -7,6 +7,10 @@ let Users = Models.User;
 let JWTStrategy = passportJWT.Strategy;
 let ExtractJWT = passportJWT.ExtractJwt;
 
+/**
+ * This strategy is used by the '/login' route.
+ * It checks if the username and password a user wants to authenticate with, exist in the database.
+ */
 passport.use(new LocalStrategy({
     usernameField: 'username',
     passwordField: 'pwd'
@@ -33,6 +37,10 @@ passport.use(new LocalStrategy({
     });
 }));
 
+/**
+ * This strategy is used for authorization.
+ * Here the user that makes the request is ckecked against the databse using the user's id extracted from the JWT.
+ */
 passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
     secretOrKey: 'secret_jwt'

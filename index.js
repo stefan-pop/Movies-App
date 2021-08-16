@@ -39,6 +39,7 @@ app.use(cors({
     }
 }));
 
+// Middlewares
 app.use(morgan('common'));
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -48,12 +49,19 @@ let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
+
+/**
+ * Endpoints
+ */
+
 // Home Page
 app.get('/', (req, res) => {
     res.send("Welcome to the homepage.");
 })
 
-// Return all the movies in json format
+/**
+ * Endpoint that returns all the movies
+ */
 app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
     Movies.find().then((movies) => {
         res.status(201).json(movies)
@@ -63,7 +71,9 @@ app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) =>
     })
 })
 
-// Return a movie by title
+/**
+ * Endpoint that retruns a movie by its title
+ */
 app.get('/movies/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
     Movies.findOne({title: req.params.title}).then((movie) => {
         res.status(201).json(movie);
@@ -73,7 +83,9 @@ app.get('/movies/:title', passport.authenticate('jwt', {session: false}), (req, 
     })
 })
 
-// Return details about a genre
+/**
+ * Endpoint that returns details about a genre
+ */
 app.get('/movies/genres/:genre_name', passport.authenticate('jwt', {session: false}), (req,res) => {
     Movies.findOne({"genre.name": req.params.genre_name}).then((response) => {
         if (!response) {
@@ -87,7 +99,9 @@ app.get('/movies/genres/:genre_name', passport.authenticate('jwt', {session: fal
     })
 })
 
-// Return a director by name
+/**
+ * Endpoint that returns details about a director, by director's name
+ */
 app.get('/movies/details/directors/:director_name', passport.authenticate('jwt', {session: false}), (req, res) => {
     Movies.findOne({"director.name": req.params.director_name}).then((response) => {
         if (!response) {
@@ -101,7 +115,9 @@ app.get('/movies/details/directors/:director_name', passport.authenticate('jwt',
     })
 })
 
-// Create a new user
+/**
+ * Endpoint to create a new account
+ */
 app.post('/users', [
         // Configure the validation of req.body
         check('username', 'Username is required').isLength({min: 5, max: 20}),
@@ -138,7 +154,9 @@ app.post('/users', [
     })
 })
 
-// Get a user by username
+/**
+ * Endpoint that returns details about a user, by its username
+ */
 app.get('/users/:username', passport.authenticate('jwt', {
     session: false
     }), (req, res) => {
@@ -153,7 +171,9 @@ app.get('/users/:username', passport.authenticate('jwt', {
         });
     });
 
-// Get the list of favorite movies for a speciffic user by username
+/**
+ * Endpoint that returns the list of favorite movies of a user
+ */
 app.get('/users/favorites/:username', passport.authenticate('jwt', {
     session: false
     }), (req, res) => {
@@ -169,7 +189,9 @@ app.get('/users/favorites/:username', passport.authenticate('jwt', {
         });
     });
 
-// Update user info
+/**
+ * Endpoint where a user can update his details
+ */
 app.put('/users/:username', passport.authenticate('jwt', {session: false}), [
         check('username', 'Username is required').isLength({min: 5, max: 20}),
         check('username', 'Only alphanumeric characters are allowed').isAlphanumeric(),
@@ -201,7 +223,9 @@ app.put('/users/:username', passport.authenticate('jwt', {session: false}), [
         })
 })
 
-// Add a movie as favorite
+/**
+ * Endpoint that adds a movie to the list of favorite movies
+ */
 app.post('/users/:username/favorites/:movie_id', passport.authenticate('jwt', {session: false}), (req, res) => {
     Users.findOneAndUpdate({username: req.params.username}, {
         $addToSet: { favorite_movies: req.params.movie_id }
@@ -217,7 +241,9 @@ app.post('/users/:username/favorites/:movie_id', passport.authenticate('jwt', {s
     })
 })
 
-// Delete a movie from favorites by the title of the movie
+/**
+ * Endpoint that deletes a movie from the list of favorite movies
+ */
 app.delete('/users/:username/favorites/:movie_id', passport.authenticate('jwt', {session: false}), (req, res) => {
     Users.findOneAndUpdate({username: req.params.username}, {
         $pull: { favorite_movies: req.params.movie_id }
@@ -233,7 +259,9 @@ app.delete('/users/:username/favorites/:movie_id', passport.authenticate('jwt', 
     })
 })
 
-// Delete account by the username of the user
+/**
+ * Endpoint for deleting an account
+ */
 app.delete('/users/:username', passport.authenticate('jwt', {session: false}), (req, res) => {
    Users.findOneAndRemove({username: req.params.username}).then((user) => {
        if(!user) {
@@ -247,6 +275,7 @@ app.delete('/users/:username', passport.authenticate('jwt', {session: false}), (
    })
 })
 
+// Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Server Error');
