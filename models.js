@@ -38,7 +38,10 @@ let userSchema = mongoose.Schema({
 
 /**
  * Function that encrypts the password before storing it in the database
- * @param {string} password 
+ * @name hashPassword
+ * @function
+ * @memberof module:models
+ * @param {string} password User's password from request
  * @returns {string} the encrypted password
  */
 userSchema.statics.hashPassword = function(password) {
@@ -47,8 +50,11 @@ userSchema.statics.hashPassword = function(password) {
 
 /**
  * Function that compares the encrypted password from the route against the password from the DB.
- * @param {string} password 
- * @returns {boolean}
+ * @name validatePassword
+ * @function
+ * @memberof module:models
+ * @param {string} password User's password from request
+ * @returns {boolean} Returns true or false 
  */
 userSchema.methods.validatePassword = function(password) {
     return bcrypt.compareSync(password, this.pwd);

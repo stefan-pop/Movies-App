@@ -65,6 +65,7 @@ require('./passport');
  * @memberof module:app
  * @param {string} path - Express path
  * @param  {callback} routeHandler - Express route handler
+ * @returns {string} - Returns a welcome message
  */
 app.get('/', (req, res) => {
     res.send("Welcome to the homepage.");
@@ -78,6 +79,8 @@ app.get('/', (req, res) => {
  * @param {string} path - Express path
  * @param {func} passport.authenticate  Authentication method using Passport
  * @param  {callback} routeHandler - Express route handler
+ * @throws - Throws an error if something fails
+ * @returns {Array.<Object>} - Returns an array of movie objects
  */
 app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
     Movies.find().then((movies) => {
@@ -96,6 +99,8 @@ app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) =>
  * @param {string} path - Express path
  * @param {func} passport.authenticate  Authentication method using Passport
  * @param  {callback} routeHandler - Express route handler
+ * @throws - Throws an error if something fails
+ * @returns {Object} - Returns a movie object
  */
 app.get('/movies/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
     Movies.findOne({title: req.params.title}).then((movie) => {
@@ -114,6 +119,9 @@ app.get('/movies/:title', passport.authenticate('jwt', {session: false}), (req, 
  * @param {string} path - Express path
  * @param {func} passport.authenticate  Authentication method using Passport
  * @param  {callback} routeHandler - Express route handler
+ * @throws - Throws an error if something fails
+ * @throws - Throws an error if a genre name is not found in database
+ * @returns {Object} - Returns a genre object
  */
 app.get('/movies/genres/:genre_name', passport.authenticate('jwt', {session: false}), (req,res) => {
     Movies.findOne({"genre.name": req.params.genre_name}).then((response) => {
@@ -136,6 +144,9 @@ app.get('/movies/genres/:genre_name', passport.authenticate('jwt', {session: fal
  * @param {string} path - Express path
  * @param {func} passport.authenticate  Authentication method using Passport
  * @param  {callback} routeHandler - Express route handler
+ * @throws - Throws an error if something fails
+ * @throws - Throws an error if a director name is not found in database
+ * @returns {Object} - Returns a director object
  */
 app.get('/movies/details/directors/:director_name', passport.authenticate('jwt', {session: false}), (req, res) => {
     Movies.findOne({"director.name": req.params.director_name}).then((response) => {
@@ -158,6 +169,10 @@ app.get('/movies/details/directors/:director_name', passport.authenticate('jwt',
  * @param {string} path - Express path
  * @param {array} validationConfig configure the validation for username, password and email of a new account
  * @param  {callback} routeHandler - Express route handler
+ * @throws - Throws an error if something fails
+ * @throws - Throws an error if the user's credential don't pass validation
+ * @throws - Throws an error if one or more credentials are already existent in database
+ * @returns {Object} Returns a user object
  */
 app.post('/users', [
         // Configure the validation of req.body
@@ -203,6 +218,8 @@ app.post('/users', [
  * @param {string} path - Express path
  * @param {func} passport.authenticate  Authentication method using Passport
  * @param  {callback} routeHandler - Express route handler
+ * @throws - Throws an error if something fails
+ * @returns {Object} Returns a user object
  */
 app.get('/users/:username', passport.authenticate('jwt', {
     session: false
@@ -226,6 +243,8 @@ app.get('/users/:username', passport.authenticate('jwt', {
  * @param {string} path - Express path
  * @param {func} passport.authenticate  Authentication method using Passport
  * @param  {callback} routeHandler - Express route handler
+ * @throws - Throws an error if something fails
+ * @returns {Array<string>} Returns an array with the IDs of favorite movies
  */
 app.get('/users/favorites/:username', passport.authenticate('jwt', {
     session: false
@@ -251,6 +270,10 @@ app.get('/users/favorites/:username', passport.authenticate('jwt', {
  * @param {func} passport.authenticate  Authentication method using Passport
  * @param {array} validationConfig configure the validation for username, password and email of a user
  * @param  {callback} routeHandler - Express route handler
+ * @throws - Throws an error if something fails
+ * @throws - Throws an error if the user's credential don't pass validation
+ * @throws - Throws an error if one or more credentials are already existent in database
+ * @returns {Object} Returns the updated user object
  */
 app.put('/users/:username', passport.authenticate('jwt', {session: false}), [
         check('username', 'Username is required').isLength({min: 5, max: 20}),
@@ -291,6 +314,8 @@ app.put('/users/:username', passport.authenticate('jwt', {session: false}), [
  * @param {string} path - Express path
  * @param {func} passport.authenticate  Authentication method using Passport
  * @param  {callback} routeHandler - Express route handler
+ * @throws - Throws an error if something fails
+ * @returns {Object} Returns the whole user object with the updated list of favorite movies
  */
 app.post('/users/:username/favorites/:movie_id', passport.authenticate('jwt', {session: false}), (req, res) => {
     Users.findOneAndUpdate({username: req.params.username}, {
@@ -315,6 +340,8 @@ app.post('/users/:username/favorites/:movie_id', passport.authenticate('jwt', {s
  * @param {string} path - Express path
  * @param {func} passport.authenticate  Authentication method using Passport
  * @param  {callback} routeHandler - Express route handler
+ * @throws - Throws an error if something fails
+ * @returns {Object} Returns the whole user object with the updated list of favorite movies
  */
 app.delete('/users/:username/favorites/:movie_id', passport.authenticate('jwt', {session: false}), (req, res) => {
     Users.findOneAndUpdate({username: req.params.username}, {
@@ -339,6 +366,8 @@ app.delete('/users/:username/favorites/:movie_id', passport.authenticate('jwt', 
  * @param {string} path - Express path
  * @param {func} passport.authenticate  Authentication method using Passport
  * @param  {callback} routeHandler - Express route handler
+ * @throws - Throws an error if something fails
+ * @returns {string} Returns a confirmation message
  */
 app.delete('/users/:username', passport.authenticate('jwt', {session: false}), (req, res) => {
    Users.findOneAndRemove({username: req.params.username}).then((user) => {
