@@ -60,7 +60,11 @@ app.get('/', (req, res) => {
 })
 
 /**
- * Endpoint that returns all the movies
+ * @description Endpoint that returns all the movies
+ * @param {string} endpoint '/movies'
+ * @param {func} passport.authenticate  Authentication method using Passport
+ * @param {func} requestHandler
+ * @returns {array}  Returns all the movies.
  */
 app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
     Movies.find().then((movies) => {
@@ -72,7 +76,11 @@ app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) =>
 })
 
 /**
- * Endpoint that retruns a movie by its title
+ * @description Endpoint that retruns a movie by its title
+ * @param {string} endpoint '/movies/:title'
+ * @param {func}   passport.authenticate  Authentication method using Passport
+ * @param {func}  requestHandler
+ * @returns {object}  Returns a movie by its title.
  */
 app.get('/movies/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
     Movies.findOne({title: req.params.title}).then((movie) => {
@@ -84,7 +92,11 @@ app.get('/movies/:title', passport.authenticate('jwt', {session: false}), (req, 
 })
 
 /**
- * Endpoint that returns details about a genre
+ * @description Endpoint that returns details about a genre
+ * @param {string} endpoint '/movies/genres/:genre_name'
+ * @param {func}   passport.authenticate  Authentication method using Passport
+ * @param {func}  requestHandler
+ * @returns {object} Returns an object with the name and the description of a genre
  */
 app.get('/movies/genres/:genre_name', passport.authenticate('jwt', {session: false}), (req,res) => {
     Movies.findOne({"genre.name": req.params.genre_name}).then((response) => {
@@ -100,7 +112,11 @@ app.get('/movies/genres/:genre_name', passport.authenticate('jwt', {session: fal
 })
 
 /**
- * Endpoint that returns details about a director, by director's name
+ * @description Endpoint that returns details about a director
+ * @param {string} endpoint '/movies/details/directors/:director_name'
+ * @param {func}   passport.authenticate  Authentication method using Passport
+ * @param {func}  requestHandler
+ * @returns {object} Returns an object with the name, biography, birth and death of a director
  */
 app.get('/movies/details/directors/:director_name', passport.authenticate('jwt', {session: false}), (req, res) => {
     Movies.findOne({"director.name": req.params.director_name}).then((response) => {
@@ -116,7 +132,11 @@ app.get('/movies/details/directors/:director_name', passport.authenticate('jwt',
 })
 
 /**
- * Endpoint to create a new account
+ * @description Endpoint to create a new account
+ * @param {string} endpoint '/users'
+ * @param {array} validation  Configuration of user's credential validation
+ * @param {func} reqestHandler 
+ * @return {object}  Returns an object with the user's info
  */
 app.post('/users', [
         // Configure the validation of req.body
@@ -155,7 +175,11 @@ app.post('/users', [
 })
 
 /**
- * Endpoint that returns details about a user, by its username
+ * @description Endpoint that returns details about a user, by its username
+ * @param {string} endpoint '/users/:username'
+ * @param {func} passportAuth  Authentication method using Passport
+ * @param {func} reqHandler
+ * @returns {object}  Returns an object with the requested user
  */
 app.get('/users/:username', passport.authenticate('jwt', {
     session: false
@@ -172,7 +196,11 @@ app.get('/users/:username', passport.authenticate('jwt', {
     });
 
 /**
- * Endpoint that returns the list of favorite movies of a user
+ * @description Endpoint that returns the list of favorite movies of a user
+ * @param {string} endpoint '/users/favorites/:username'
+ * @param {func}   passport.authenticate  Authentication method using Passport
+ * @param {func}  requestHandler
+ * @returns {array} An array with the IDs of user's favorite movies
  */
 app.get('/users/favorites/:username', passport.authenticate('jwt', {
     session: false
@@ -190,7 +218,12 @@ app.get('/users/favorites/:username', passport.authenticate('jwt', {
     });
 
 /**
- * Endpoint where a user can update his details
+ * @description Endpoint where a user can update his info
+ * @param {string} endpoint '/users/:username'
+ * @param {func} passportAuth  Authentication method using Passport
+ * @param {array} validation  Configuration of user's credential validation
+ * @param {func} reqHandler
+ * @returns {object}  Returns an object with the user's updated info
  */
 app.put('/users/:username', passport.authenticate('jwt', {session: false}), [
         check('username', 'Username is required').isLength({min: 5, max: 20}),
@@ -224,7 +257,11 @@ app.put('/users/:username', passport.authenticate('jwt', {session: false}), [
 })
 
 /**
- * Endpoint that adds a movie to the list of favorite movies
+ * @description Endpoint that adds a movie to the list of favorite movies
+ * @param {string} endpoint '/users/:username/favorites/:movie_id'
+ * @param {func} passportAuth  Authentication method using Passport
+ * @param {func} reqHandler
+ * @returns {object}  Returns the entire user object uith the updated list of favorite movies
  */
 app.post('/users/:username/favorites/:movie_id', passport.authenticate('jwt', {session: false}), (req, res) => {
     Users.findOneAndUpdate({username: req.params.username}, {
@@ -242,7 +279,11 @@ app.post('/users/:username/favorites/:movie_id', passport.authenticate('jwt', {s
 })
 
 /**
- * Endpoint that deletes a movie from the list of favorite movies
+ * @description Endpoint that deletes a movie from the list of favorite movies
+ * @param {string} endpoint '/users/:username/favorites/:movie_id'
+ * @param {func} passportAuth  Authentication method using Passport
+ * @param {func} reqHandler
+ * @returns {object}  Returns the entire user object uith the updated list of favorite movies
  */
 app.delete('/users/:username/favorites/:movie_id', passport.authenticate('jwt', {session: false}), (req, res) => {
     Users.findOneAndUpdate({username: req.params.username}, {
@@ -260,7 +301,11 @@ app.delete('/users/:username/favorites/:movie_id', passport.authenticate('jwt', 
 })
 
 /**
- * Endpoint for deleting an account
+ * @description Endpoint for deleting an account
+ * @param {string} endpoint '/users/:username'
+ * @param {func} passportAuth  Authentication method using Passport
+ * @param {func} reqHandler
+ * @returns {object}  Returns a confirmation message
  */
 app.delete('/users/:username', passport.authenticate('jwt', {session: false}), (req, res) => {
    Users.findOneAndRemove({username: req.params.username}).then((user) => {

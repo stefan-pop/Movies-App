@@ -5,7 +5,7 @@ require('./passport.js');
 
 /**
  * Function that generate the JWT token
- * @param {*} user 
+ * @param {object} user The user object that will be encrypted in the payload of JWT
  * @returns the JWT token, with the user's username encoded in it.
  */
 let generateJWTToken = (user) => {
