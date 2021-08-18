@@ -1,3 +1,7 @@
+/**
+ * @module auth
+ */
+
 const jwtSecret = 'secret_jwt';
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
@@ -19,7 +23,7 @@ let generateJWTToken = (user) => {
 /**
  * Login route
  * @param {*} router 
- * @returns the user with all it's details and a token for the authenticated user
+ * @returns {object} the user with all it's details and a token for the authenticated user
  */
 module.exports = (router) => {
     router.post('/login', (req, res) => {
